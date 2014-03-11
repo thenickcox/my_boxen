@@ -88,3 +88,14 @@ node default {
     target => $boxen::config::repodir
   }
 }
+
+include iterm2::dev
+include iterm2::colors::solarized_light
+include iterm2::colors::solarized_dark
+include vim
+include tmux
+include keyremap4macbook
+include tunnelblick
+include pckeyboardhack
+include zsh
+include gitx::dev
