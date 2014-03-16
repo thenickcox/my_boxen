@@ -59,6 +59,8 @@ github "xquartz",     "1.1.1"
 
 # Optional/custom modules. There are tons available at
 # https://github.com/boxen.
+github "chrome"
+github "hipchat"
 github "osx"
 github "iterm2"
 github "vim", ">= 0", :repo => "johnbellone/puppet-vim"
@@ -68,3 +70,5 @@ github "keyremap4macbook"
 github "tunnelblick"
 github "gitx"
 github "zsh"
+github "mysql"
+github "redis"
