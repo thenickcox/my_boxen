@@ -45,4 +45,11 @@ class people::pfenig {
     redis  => true,
     source => 'NavigatingCancer/fuchsia'
   }
+
+  git::config::global { 'user.email':
+    value  => 'steven.fenigstein@gmail.com'
+  } 
+  git::config::global { 'user.name':
+    value  => 'pfenig'
+  } 
 }
