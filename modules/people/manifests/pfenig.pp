@@ -15,10 +15,13 @@ class people::pfenig {
   include pckeyboardhack
   include zsh
   include gitx::dev
+  include sequel_pro
   
   package {
     [
-      'qt'
+      'qt',
+      'freetds',
+      'bash'
     ]:
   }
   
@@ -27,24 +30,69 @@ class people::pfenig {
     path   => "/Users/${::luser}/.oh-my-zsh",
   }
 
+  repository {'${boxen::config::srcdir}/dotfiles':
+    ensure => present,
+    source => 'pfenig/.dotfiles',
+    path   => "${boxen::config::srcdir}/dotfiles",
+  }
+
+  file { "/Users/${::luser}/.tmux.conf":
+    ensure  => link,
+    mode    => '0644',
+    target  => "${boxen::config::srcdir}/dotfiles/.tmux.conf",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+  }
+
+  file { "/Users/${::luser}/.zshrc":
+    ensure  => link,
+    mode    => '0644',
+    target  => "${boxen::config::srcdir}/dotfiles/.zshrc",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+  }
+
+  file { "/Users/${::luser}/.ackrc":
+    ensure  => link,
+    mode    => '0644',
+    target  => "${boxen::config::srcdir}/dotfiles/.ackrc",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+  }
+
+  file { "/Users/${::luser}/.vimrc":
+    ensure => link,
+    mode   => '0644',
+    target => "${boxen::config::srcdir}/dotfiles/.vimrc",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+  }
+
   boxen::project { 'gc':
-    ruby   => '1.9.3',
+    ruby   => '1.9.3-p385',
     mysql  => true,
     redis  => true,
     source => 'NavigatingCancer/gc'
   }
 
   boxen::project { 'crimson':
-    ruby   => '1.9.3',
+    ruby   => '1.9.3-p392',
     redis  => true,
     source => 'NavigatingCancer/crimson'
   }
 
   boxen::project { 'fuchsia':
-    ruby   => '1.9.3',
     redis  => true,
     source => 'NavigatingCancer/fuchsia'
   }
+
+  #git::config::local { 'gc_email_config':
+    #repo => "${boxen::config::srcdir}/gc",
+    #key => "user.email",
+    #value => "steve@navigatingcancer.com"
+  #}
+
+  #git::config::local { 'gc_name_config':
+    #repo => "${boxen::config::srcdir}/gc",
+    #key => "user.name",
+    #value => "Steven Fenigstein"
+  #}
 
   git::config::global { 'user.email':
     value  => 'steven.fenigstein@gmail.com'
