@@ -21,7 +21,8 @@ class people::pfenig {
     [
       'qt',
       'freetds',
-      'bash'
+      'bash',
+      'reattach-to-user-namespace'
     ]:
   }
   
