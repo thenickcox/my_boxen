@@ -22,7 +22,8 @@ class people::pfenig {
       'qt',
       'freetds',
       'bash',
-      'reattach-to-user-namespace'
+      'reattach-to-user-namespace',
+      'xpdf'
     ]:
   }
   
