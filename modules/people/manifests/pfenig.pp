@@ -10,6 +10,7 @@ class people::pfenig {
   include iterm2::colors::solarized_dark
   include vim
   include tmux
+  include mosh
   include keyremap4macbook
   include tunnelblick
   include pckeyboardhack

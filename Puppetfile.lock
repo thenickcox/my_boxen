@@ -144,6 +144,11 @@ GITHUBTARBALL
     zsh (1.0.0)
 
 GITHUBTARBALL
+  remote: davidbanham/puppet-mosh
+  specs:
+    mosh (1.0.1)
+
+GITHUBTARBALL
   remote: johnbellone/puppet-vim
   specs:
     vim (1.0.5)
@@ -179,6 +184,7 @@ DEPENDENCIES
   iterm2 (>= 0)
   keyremap4macbook (>= 0)
   module-data (= 0.0.3)
+  mosh (>= 0)
   mysql (>= 0)
   nginx (= 1.4.3)
   nodejs (= 3.7.0)
