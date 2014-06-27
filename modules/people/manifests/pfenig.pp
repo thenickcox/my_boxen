@@ -17,6 +17,7 @@ class people::pfenig {
   include zsh
   include gitx::dev
   include sequel_pro
+  include java
   
   package {
     [
