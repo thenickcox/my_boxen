@@ -1,4 +1,4 @@
-class people::pfenig {
+class people::domaindrivendev {
   include osx::finder::show_all_on_desktop
   include osx::finder::unhide_library
   include osx::finder::show_hidden_files
@@ -8,43 +8,58 @@ class people::pfenig {
   include iterm2::dev
   include iterm2::colors::solarized_light
   include iterm2::colors::solarized_dark
-  include vim
   include tmux
-  #include keyremap4macbook
+  include keyremap4macbook
   include tunnelblick
-  #include pckeyboardhack
-  #include zsh
+  include pckeyboardhack
+  include zsh
   include gitx::dev
   include sequel_pro
-  
+	include ctags
+  include java
+  include rabbitmq
+  include mosh
+  include openoffice
+
   package {
     [
-      'reattach-to-user-namespace',
+			'qt',
+      'freetds',
+#      'bash',
+#      'reattach-to-user-namespace',
+#      'xpdf'
     ]:
   }
   
-  #repository {'robbyrussell_oh-my-zsh':
-    #source => 'robbyrussell/oh-my-zsh',
-    #path   => "/Users/${::luser}/.oh-my-zsh",
-  #}
-
   repository {'${boxen::config::srcdir}/dotfiles':
     ensure => present,
-    source => 'domaindrivendev/.dotfiles',
+    source => 'domaindrivendev/dotfiles',
     path   => "${boxen::config::srcdir}/dotfiles",
   }
-
-  #file { "/Users/${::luser}/.tmux.conf":
-    #ensure  => link,
-    #mode    => '0644',
-    #target  => "${boxen::config::srcdir}/dotfiles/.tmux.conf",
-    #require => Repository["${boxen::config::srcdir}/dotfiles"],
-  #}
 
   file { "/Users/${::luser}/.zshrc":
     ensure  => link,
     mode    => '0644',
     target  => "${boxen::config::srcdir}/dotfiles/.zshrc",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+  }
+
+  repository {'robbyrussell_oh-my-zsh':
+    source => 'robbyrussell/oh-my-zsh',
+    path   => "${boxen::config::srcdir}/oh-my-zsh",
+  }
+
+  file { "/Users/${::luser}/.tmux.conf":
+    ensure  => link,
+    mode    => '0644',
+    target  => "${boxen::config::srcdir}/dotfiles/.tmux.conf",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+  }
+
+  file { "/Users/${::luser}/.gitconfig":
+    ensure => link,
+    mode   => '0644',
+    target => "${boxen::config::srcdir}/dotfiles/.gitconfig",
     require => Repository["${boxen::config::srcdir}/dotfiles"],
   }
 
@@ -61,6 +76,14 @@ class people::pfenig {
     target => "${boxen::config::srcdir}/dotfiles/.vimrc",
     require => Repository["${boxen::config::srcdir}/dotfiles"],
   }
+
+  file { "/Users/${::luser}/.vim":
+		force => true,
+    ensure => link,
+    mode   => '0644',
+    target => "${boxen::config::srcdir}/dotfiles/.vim",
+    require => Repository["${boxen::config::srcdir}/dotfiles"],
+	}
 
   boxen::project { 'gc':
     ruby   => '1.9.3-p385',
@@ -79,23 +102,4 @@ class people::pfenig {
     redis  => true,
     source => 'NavigatingCancer/fuchsia'
   }
-
-  #git::config::local { 'gc_email_config':
-    #repo => "${boxen::config::srcdir}/gc",
-    #key => "user.email",
-    #value => "steve@navigatingcancer.com"
-  #}
-
-  #git::config::local { 'gc_name_config':
-    #repo => "${boxen::config::srcdir}/gc",
-    #key => "user.name",
-    #value => "Steven Fenigstein"
-  #}
-
-  git::config::global { 'user.email':
-    value  => 'steven.fenigstein@gmail.com'
-  } 
-  git::config::global { 'user.name':
-    value  => 'pfenig'
-  } 
 }
